@@ -1,0 +1,51 @@
+{% extends 'store/메인.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+  <div class="col-lig-12">
+    <div class="box">
+      <a class="btn btn-secondary" href="{% url 'store' %}">
+        <img width=30 src="{% static 'images\reply-shop.png' %}">계속 쇼핑하기
+      </a>
+
+      <table class="table">
+        <tr>
+          <th><h5>제품: <strong>{{order.get_cart_items}}</strong></h5></th>
+          <th><h5>가격: <strong>${{order.get_cart_total|floatformat:2}}</strong></h5></th>
+          <th><a style="float: right; margin: 7px;" class="btn btn-success" href="{% url 'checkout' %}">결제하기</a></th>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-lig-12">
+    <div class="box">
+      <div class="장바구니줄">
+        <div style="flex: 2"></div>
+        <div style="flex: 2"><strong>제품</strong></div>
+        <div style="flex: 1"><strong>가격</strong></div>
+        <div style="flex: 1"><strong>수량</strong></div>
+        <div style="flex: 1"><strong>총합</strong></div>
+      </div>
+
+      {% for item in items %}
+      <div class="장바구니줄">
+        <div style="flex: 2"><img class="장바구니에서이미지" src="{{item.product.imageURL}}"></div>
+        <div style="flex: 2"><strong>{{item.product.name}}</strong></div>
+        <div style="flex: 1"><strong>${{item.product.price|floatformat:2}}</strong></div>
+        <div style="flex: 1"><strong>{{item.quantity}}개</strong>
+          <div class="수량">
+            <img data-product={{item.product.id}} data-action="add" class="수량버튼 장바구니업데이트" src="{% static 'images/arrow-up.png' %}">
+            <img data-product={{item.product.id}} data-action="remove" class="수량버튼 장바구니업데이트" src="{% static 'images/arrow-down.png' %}">
+          </div>
+        </div>
+        <div style="flex: 1"><strong>${{item.get_total}}</strong></div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+
+
+{% endblock content %}
